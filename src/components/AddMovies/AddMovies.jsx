@@ -1,142 +1,148 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import { authContext } from "../AuthProvider/AuthProvider"; // Assuming authContext provides user info
 import { Rating } from "react-simple-star-rating";
 import Swal from "sweetalert2";
-import "./AddMovies.css"; // Create this CSS for styling
 
 const AddMovies = () => {
-  const { user } = useContext(authContext); // Get user info from context
-  const [formData, setFormData] = useState({
-    poster: "",
-    title: "",
-    genre: "",
-    duration: "",
-    releaseYear: "",
-    rating: 0,
-    summary: "",
-  });
+  const { user } = useContext(authContext);
 
   const [errors, setErrors] = useState({});
+  const [rating, setRating] = useState(0);
 
-  // Handle form field changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleRating = (rate) => {
+    setRating(rate);
   };
+  // Optional callback functions
+  const onPointerEnter = () => console.log("Pointer Entered");
+  const onPointerLeave = () => console.log("Pointer Left");
+  const onPointerMove = (value, index) =>
+    console.log("Value:", value, "Index:", index);
 
-  // Handle rating changes
-  const handleRatingChange = (rate) => {
-    setFormData({ ...formData, rating: rate });
-  };
+  const handleAddMovie = (event) => {
+    event.preventDefault();
 
-  // Validate form data
-  const validateForm = () => {
+    const form = event.target;
+    const poster = form.poster.value;
+    const title = form.title.value;
+    const genre = form.genre.value;
+    const duration = form.duration.value;
+    const releaseYear = form.releaseYear.value;
+    const summary = form.summary.value;
+
     const newErrors = {};
-    if (
-      !formData.poster ||
-      !/^https?:\/\/.+\.(jpg|jpeg|png|webp|gif)$/.test(formData.poster)
-    ) {
-      newErrors.poster = "Invalid image URL.";
+
+    // Validate fields
+    if (!poster || !/^https?:\/\/.+\.(jpg|jpeg|png|webp|gif)$/.test(poster)) {
+      newErrors.poster = "Insert a valid image URL.";
     }
-    if (!formData.title || formData.title.length < 2) {
+    if (!title || title.length < 2) {
       newErrors.title = "Title must be at least 2 characters long.";
     }
-    if (!formData.genre) {
+    if (!genre) {
       newErrors.genre = "Please select a genre.";
     }
-    if (!formData.duration || formData.duration < 60) {
+    if (!duration || duration < 60) {
       newErrors.duration = "Duration must be greater than 60 minutes.";
     }
-    if (!formData.releaseYear) {
+    if (!releaseYear) {
       newErrors.releaseYear = "Please select a release year.";
     }
-    if (!formData.rating) {
-      newErrors.rating = "Please provide a rating.";
+    if (!rating || rating <= 0) {
+      newErrors.rating = "Please provide a valid rating.";
     }
-    if (!formData.summary || formData.summary.length < 10) {
+    if (!summary || summary.length < 10) {
       newErrors.summary = "Summary must be at least 10 characters long.";
     }
+
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-
-    const movieData = { ...formData, userEmail: user?.email };
-
-    try {
-      const response = await fetch("http://localhost:5000/movies", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(movieData),
-      });
-
-      if (response.ok) {
-        Swal.fire("Success", "Movie added successfully!", "success");
-        setFormData({
-          poster: "",
-          title: "",
-          genre: "",
-          duration: "",
-          releaseYear: "",
-          rating: 0,
-          summary: "",
-        });
-      } else {
-        Swal.fire("Error", "Failed to add movie.", "error");
-      }
-    } catch (error) {
-      Swal.fire("Error", "An error occurred while adding the movie.", "error");
+    if (Object.keys(newErrors).length > 0) {
+      return;
     }
+
+    // Prepare movie data
+    const newMovie = {
+      poster,
+      title,
+      genre,
+      duration: parseInt(duration),
+      releaseYear,
+      rating,
+      summary,
+      userEmail: user?.email,
+    };
+
+    // Send data to the server
+    fetch("http://localhost:5000/movies", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newMovie),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.acknowledged) {
+          Swal.fire("Success", "Movie added successfully!", "success");
+          form.reset();
+          setErrors({});
+          setRating(0);
+        } else {
+          Swal.fire("Error", "Failed to add movie.", "error");
+        }
+      })
+      .catch((err) => {
+        console.error("Error:", err);
+        Swal.fire(
+          "Error",
+          "An error occurred while adding the movie.",
+          "error"
+        );
+      });
   };
 
   return (
-    <div className="add-movie-container">
-      <h1 className="font-bold text-2xl mb-4">Add a Movie</h1>
-      <form onSubmit={handleSubmit} className="form">
+    <div className="flex flex-col items-center justify-center bg-base-200">
+      <h1 className="text-3xl font-bold my-6 text-center text-[#f05122]">
+        Add a Movie
+      </h1>
+      <form
+        onSubmit={handleAddMovie}
+        className="bg-white shadow-xl p-6 rounded-xl w-[90%] lg:w-1/2 mb-12 flex flex-col gap-3"
+      >
         {/* Movie Poster */}
-        <div className="form-group">
-          <label htmlFor="poster">Movie Poster (URL):</label>
+        <div>
+          <label htmlFor="poster" className="font-bold text-xl">
+            Movie Poster (URL):
+          </label>
           <input
             type="text"
             id="poster"
             name="poster"
-            value={formData.poster}
-            onChange={handleChange}
-            className="input"
+            className="input w-full"
           />
-          {errors.poster && <span className="error">{errors.poster}</span>}
+          {errors.poster && (
+            <span className="error text-red-500">{errors.poster}</span>
+          )}
         </div>
 
         {/* Movie Title */}
-        <div className="form-group">
-          <label htmlFor="title">Movie Title:</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            className="input"
-          />
-          {errors.title && <span className="error">{errors.title}</span>}
+        <div>
+          <label htmlFor="title" className="font-bold text-xl">
+            Movie Title:
+          </label>
+          <input type="text" id="title" name="title" className="input w-full" />
+          {errors.title && (
+            <span className="error text-red-500">{errors.title}</span>
+          )}
         </div>
 
         {/* Genre */}
-        <div className="form-group">
-          <label htmlFor="genre">Genre:</label>
-          <select
-            id="genre"
-            name="genre"
-            value={formData.genre}
-            onChange={handleChange}
-            className="select"
-          >
+        <div>
+          <label htmlFor="genre" className="font-bold text-xl">
+            Genre:
+          </label>
+          <select id="genre" name="genre" className="select w-full">
             <option value="">Select Genre</option>
             <option value="Comedy">Comedy</option>
             <option value="Drama">Drama</option>
@@ -144,71 +150,89 @@ const AddMovies = () => {
             <option value="Thriller">Thriller</option>
             <option value="Action">Action</option>
           </select>
-          {errors.genre && <span className="error">{errors.genre}</span>}
+          {errors.genre && (
+            <span className="error text-red-500">{errors.genre}</span>
+          )}
         </div>
 
         {/* Duration */}
-        <div className="form-group">
-          <label htmlFor="duration">Duration (minutes):</label>
+        <div>
+          <label htmlFor="duration" className="font-bold text-xl">
+            Duration (minutes):
+          </label>
           <input
             type="number"
             id="duration"
             name="duration"
-            value={formData.duration}
-            onChange={handleChange}
-            className="input"
+            className="input w-full"
           />
-          {errors.duration && <span className="error">{errors.duration}</span>}
+          {errors.duration && (
+            <span className="error text-red-500">{errors.duration}</span>
+          )}
         </div>
 
         {/* Release Year */}
-        <div className="form-group">
-          <label htmlFor="releaseYear">Release Year:</label>
-          <select
-            id="releaseYear"
-            name="releaseYear"
-            value={formData.releaseYear}
-            onChange={handleChange}
-            className="select"
-          >
+        <div>
+          <label htmlFor="releaseYear" className="font-bold text-xl">
+            Release Year:
+          </label>
+          <select id="releaseYear" name="releaseYear" className="select w-full">
             <option value="">Select Year</option>
-            {[...Array(75)].map((_, i) => (
+            {[...Array(76)].map((_, i) => (
               <option key={1950 + i} value={1950 + i}>
                 {1950 + i}
               </option>
             ))}
           </select>
           {errors.releaseYear && (
-            <span className="error">{errors.releaseYear}</span>
+            <span className="error text-red-500">{errors.releaseYear}</span>
           )}
         </div>
 
         {/* Rating */}
-        <div className="form-group">
-          <label>Rating:</label>
-          <Rating
-            onClick={handleRatingChange}
-            ratingValue={formData.rating}
-            className="rating"
-          />
-          {errors.rating && <span className="error">{errors.rating}</span>}
+        <div>
+          <label htmlFor="rating" className="font-bold text-xl">
+            Rating:
+          </label>
+          <div className="flex gap-2 items-center">
+            <Rating
+              onClick={handleRating}
+              initialValue={rating}
+              size={35}
+              fillColor="gold"
+              emptyColor="gray"
+              allowFraction={true}
+            />
+            {/* Display Rating Value */}
+            <span className="text-lg text-white bg-gray-500 px-4 py-2 rounded-xl">
+              {rating.toFixed(1)} / 5
+            </span>
+          </div>
+          {errors.rating && (
+            <span className="error text-red-500">{errors.rating}</span>
+          )}
         </div>
 
         {/* Summary */}
-        <div className="form-group">
-          <label htmlFor="summary">Summary:</label>
+        <div>
+          <label htmlFor="summary" className="font-bold text-xl">
+            Summary:
+          </label>
           <textarea
             id="summary"
             name="summary"
-            value={formData.summary}
-            onChange={handleChange}
-            className="textarea"
-          />
-          {errors.summary && <span className="error">{errors.summary}</span>}
+            className="textarea w-full"
+          ></textarea>
+          {errors.summary && (
+            <span className="error text-red-500">{errors.summary}</span>
+          )}
         </div>
 
         {/* Submit Button */}
-        <button type="submit" className="btn-submit">
+        <button
+          type="submit"
+          className="btn bg-[#f05122] text-white hover:bg-amber-600 text-lg"
+        >
           Add Movie
         </button>
       </form>
