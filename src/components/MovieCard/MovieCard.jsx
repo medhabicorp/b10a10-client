@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import "animate.css";
+import { FaStar } from "react-icons/fa";
 
 const MovieCard = ({ movie }) => {
   const { _id, title, poster, genre, duration, releaseYear, rating } = movie;
@@ -22,13 +23,13 @@ const MovieCard = ({ movie }) => {
           <p className="text-md bg-gray-600 text-center rounded-xl">
             {releaseYear}
           </p>
-          <p className="text-md bg-gray-600 text-center rounded-xl">
-            {rating.toFixed(1)} / 5
-          </p>
+          <div className="text-md bg-gray-600 text-center rounded-xl flex gap-2 justify-center items-center">
+            <FaStar /> {rating.toFixed(1)} / 5
+          </div>
         </div>
         <div className="card-actions justify-end mt-3">
           <NavLink to={`/details/${_id}`}>
-            <button className="p-2 text-lg font-bold cursor-pointer btn-primary text-white border-2 bg-gray-700 hover:border-amber-300 hover:bg-amber-100 hover:text-gray-700">
+            <button className="py-2 px-4 text-lg font-bold cursor-pointer btn-primary text-white border-2 bg-red-600 hover:border-amber-300 hover:bg-amber-100 hover:text-gray-700">
               See Details
             </button>
           </NavLink>
