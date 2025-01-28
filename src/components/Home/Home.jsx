@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import Banner from "../Banner/Banner";
 import { NavLink, useLoaderData } from "react-router-dom";
 import MovieCard from "./../MovieCard/MovieCard";
+import Pricing from "../Pricing/Pricing";
+import Review from "../Review/Review";
 
 const Home = (props) => {
   const loadMovies = useLoaderData();
@@ -35,6 +37,16 @@ const Home = (props) => {
         <button className=" mx-auto  block btn btn-outline border-2 border-[#f05122] text-[#f05122] my-4 btn-neutral">
           <NavLink to="/allmovies">All Movies</NavLink>
         </button>
+      </div>
+
+      {/* Pricing and plans */}
+      <div>
+        <Pricing />
+      </div>
+
+      {/* review */}
+      <div>
+        <Review />
       </div>
     </div>
   );
