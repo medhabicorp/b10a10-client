@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FaCheckCircle, FaTimesCircle, FaFire } from "react-icons/fa";
+import PageTitle from "../PageTitle/PageTitle";
 
 const Pricing = () => {
   const plans = [
@@ -126,6 +127,7 @@ const Pricing = () => {
           </div>
         ))}
       </div>
+      <PageTitle />
     </div>
   );
 };

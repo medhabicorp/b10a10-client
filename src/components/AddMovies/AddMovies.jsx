@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { authContext } from "../AuthProvider/AuthProvider"; // Assuming authContext provides user info
 import { Rating } from "react-simple-star-rating";
 import Swal from "sweetalert2";
+import PageTitle from "../PageTitle/PageTitle";
 
 const AddMovies = () => {
   const { user } = useContext(authContext);
@@ -236,6 +237,7 @@ const AddMovies = () => {
           Add Movie
         </button>
       </form>
+      <PageTitle />
     </div>
   );
 };

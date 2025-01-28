@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import PageTitle from "../PageTitle/PageTitle";
 
 const MovieDetails = () => {
   const movie = useLoaderData();
@@ -128,6 +129,7 @@ const MovieDetails = () => {
           </div>
         </div>
       </div>
+      <PageTitle />
     </>
   );
 };

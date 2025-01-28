@@ -5,6 +5,7 @@ import { NavLink, useLoaderData } from "react-router-dom";
 import MovieCard from "./../MovieCard/MovieCard";
 import Pricing from "../Pricing/Pricing";
 import Review from "../Review/Review";
+import PageTitle from "../PageTitle/PageTitle";
 
 const Home = (props) => {
   const loadMovies = useLoaderData();
@@ -48,6 +49,7 @@ const Home = (props) => {
       <div>
         <Review />
       </div>
+      <PageTitle />
     </div>
   );
 };

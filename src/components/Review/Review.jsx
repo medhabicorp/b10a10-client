@@ -5,6 +5,7 @@ import movieImg1 from "../../assets/movie-6.jpg";
 import movieImg2 from "../../assets/movie-5.jpg";
 import movieImg3 from "../../assets/movie-7.jpg";
 import movieImg4 from "../../assets/movie-2.jpg";
+import PageTitle from "../PageTitle/PageTitle";
 
 const Review = () => {
   const movies = [
@@ -67,6 +68,7 @@ const Review = () => {
           </div>
         ))}
       </div>
+      <PageTitle />
     </div>
   );
 };

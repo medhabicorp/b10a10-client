@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useLoaderData } from "react-router-dom";
 import MovieCard from "../MovieCard/MovieCard";
+import PageTitle from "../PageTitle/PageTitle";
 
 const AllMovies = (props) => {
   const loadMovies = useLoaderData();
@@ -18,6 +19,7 @@ const AllMovies = (props) => {
           <MovieCard key={movie._id} movie={movie} />
         ))}
       </div>
+      <PageTitle />
     </div>
   );
 };

@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, NavLink } from "react-router-dom";
 import "./Navbar.css";
 import movieLogo from "../../assets/Hero Movies logo.png";
+import { authContext } from "../AuthProvider/AuthProvider";
+import userImg from "../../assets/user-profile-50.png";
 const Navbar = (props) => {
+  const { user, handleLogout } = useContext(authContext);
   const links = (
     <>
       <li>
@@ -76,20 +79,46 @@ const Navbar = (props) => {
           {links}
         </ul>
       </div>
-      <div className="navbar-end ">
-        <Link to="/login">
-          {" "}
-          <button className="btn btn-primary bg-[#f05324] border-none">
-            Login
-          </button>
-        </Link>
-        <h1 className="mx-2">or</h1>
-        <Link to="/register">
-          {" "}
-          <button className="btn btn-primary bg-[#f05324] border-none">
-            Register
-          </button>
-        </Link>
+      <div className="navbar-end">
+        {user ? (
+          // Logged-in state
+          <div className="flex justify-center items-center gap-4">
+            {/* User photo with hover tooltip for displayName */}
+            <div className="relative group">
+              <img
+                className="w-12 h-12 rounded-full border-2 border-[#f05122] cursor-pointer"
+                src={user?.photoURL || userImg}
+                alt="User Profile"
+              />
+              {/* Tooltip for displayName */}
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-black text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                {user.displayName}
+              </div>
+            </div>
+            {/* Logout button */}
+            <button
+              className="btn bg-red-600 text-white hover:bg-orange-600 border-none"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          // Logged-out state
+          <div className="flex items-center gap-4">
+            <Link to="/login">
+              <button className="btn bg-[#f05324] text-white border-none hover:bg-[#e04a1f]">
+                Login
+              </button>
+            </Link>
+            <span className="text-gray-600">or</span>
+            <Link to="/register">
+              <button className="btn bg-[#f05324] text-white border-none hover:bg-[#e04a1f]">
+                Register
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
