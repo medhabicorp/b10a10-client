@@ -1,0 +1,252 @@
+import React, { useState } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { Rating } from "react-simple-star-rating";
+import PageTitle from "../PageTitle/PageTitle";
+
+const UpdateMovies = () => {
+  const movie = useLoaderData();
+  const { _id, poster, title, genre, duration, releaseYear, rating, summary } =
+    movie;
+
+  const [updatedRating, setUpdatedRating] = useState(rating);
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+
+  const handleRating = (rate) => {
+    setUpdatedRating(rate);
+  };
+
+  const handleUpdateMovie = (event) => {
+    event.preventDefault();
+
+    const form = event.target;
+    const updatedPoster = form.poster.value;
+    const updatedTitle = form.title.value;
+    const updatedGenre = form.genre.value;
+    const updatedDuration = form.duration.value;
+    const updatedReleaseYear = form.releaseYear.value;
+    const updatedSummary = form.summary.value;
+
+    const newErrors = {};
+
+    // Validation
+    if (
+      !updatedPoster ||
+      !/^https?:\/\/.+\.(jpg|jpeg|png|webp|gif)$/.test(updatedPoster)
+    ) {
+      newErrors.poster = "Insert a valid image URL.";
+    }
+    if (!updatedTitle || updatedTitle.length < 2) {
+      newErrors.title = "Title must be at least 2 characters long.";
+    }
+    if (!updatedGenre) {
+      newErrors.genre = "Please select a genre.";
+    }
+    if (!updatedDuration || updatedDuration < 60) {
+      newErrors.duration = "Duration must be greater than 60 minutes.";
+    }
+    if (!updatedReleaseYear) {
+      newErrors.releaseYear = "Please select a release year.";
+    }
+    if (!updatedRating || updatedRating <= 0) {
+      newErrors.rating = "Please provide a valid rating.";
+    }
+    if (!updatedSummary || updatedSummary.length < 10) {
+      newErrors.summary = "Summary must be at least 10 characters long.";
+    }
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+
+    const updatedMovie = {
+      poster: updatedPoster,
+      title: updatedTitle,
+      genre: updatedGenre,
+      duration: parseInt(updatedDuration),
+      releaseYear: updatedReleaseYear,
+      rating: updatedRating,
+      summary: updatedSummary,
+    };
+
+    // Send updated data to server
+    fetch(`http://localhost:5000/movies/${_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedMovie),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount >= 0) {
+          Swal.fire("Success", "Movie updated successfully!", "success");
+          navigate(`/details/${_id}`);
+        } else {
+          Swal.fire("Error", "Failed to update movie.", "error");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        Swal.fire(
+          "Error",
+          "An error occurred while updating the movie.",
+          "error"
+        );
+      });
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center bg-base-200">
+      <h1 className="text-3xl font-bold my-6 text-center text-[#f05122]">
+        Update Movie
+      </h1>
+      <form
+        onSubmit={handleUpdateMovie}
+        className="bg-white shadow-xl p-6 rounded-xl w-[90%] lg:w-1/2 mb-12 flex flex-col gap-3"
+      >
+        <div>
+          <label htmlFor="poster" className="font-bold text-xl">
+            Movie Poster (URL):
+          </label>
+          <input
+            type="text"
+            id="poster"
+            name="poster"
+            defaultValue={poster}
+            className="input w-full"
+          />
+          {errors.poster && (
+            <span className="error text-red-500">{errors.poster}</span>
+          )}
+        </div>
+
+        <div>
+          <label htmlFor="title" className="font-bold text-xl">
+            Movie Title:
+          </label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            defaultValue={title}
+            className="input w-full"
+          />
+          {errors.title && (
+            <span className="error text-red-500">{errors.title}</span>
+          )}
+        </div>
+
+        <div>
+          <label htmlFor="genre" className="font-bold text-xl">
+            Genre:
+          </label>
+          <select
+            id="genre"
+            name="genre"
+            defaultValue={genre}
+            className="select w-full"
+          >
+            <option value="">Select Genre</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Drama">Drama</option>
+            <option value="Horror">Horror</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Action">Action</option>
+          </select>
+          {errors.genre && (
+            <span className="error text-red-500">{errors.genre}</span>
+          )}
+        </div>
+
+        <div>
+          <label htmlFor="duration" className="font-bold text-xl">
+            Duration (minutes):
+          </label>
+          <input
+            type="number"
+            id="duration"
+            name="duration"
+            defaultValue={duration}
+            className="input w-full"
+          />
+          {errors.duration && (
+            <span className="error text-red-500">{errors.duration}</span>
+          )}
+        </div>
+
+        <div>
+          <label htmlFor="releaseYear" className="font-bold text-xl">
+            Release Year:
+          </label>
+          <select
+            id="releaseYear"
+            name="releaseYear"
+            defaultValue={releaseYear}
+            className="select w-full"
+          >
+            <option value="">Select Year</option>
+            {[...Array(76)].map((_, i) => (
+              <option key={1950 + i} value={1950 + i}>
+                {1950 + i}
+              </option>
+            ))}
+          </select>
+          {errors.releaseYear && (
+            <span className="error text-red-500">{errors.releaseYear}</span>
+          )}
+        </div>
+
+        <div>
+          <label htmlFor="rating" className="font-bold text-xl">
+            Rating:
+          </label>
+          <div className="flex gap-2 items-center">
+            <Rating
+              onClick={handleRating}
+              initialValue={updatedRating}
+              size={35}
+              fillColor="gold"
+              emptyColor="gray"
+              allowFraction={true}
+            />
+            <span className="text-lg text-white bg-gray-500 px-4 py-2 rounded-xl">
+              {updatedRating.toFixed(1)} / 5
+            </span>
+          </div>
+          {errors.rating && (
+            <span className="error text-red-500">{errors.rating}</span>
+          )}
+        </div>
+
+        <div>
+          <label htmlFor="summary" className="font-bold text-xl">
+            Summary:
+          </label>
+          <textarea
+            id="summary"
+            name="summary"
+            defaultValue={summary}
+            className="textarea w-full"
+          ></textarea>
+          {errors.summary && (
+            <span className="error text-red-500">{errors.summary}</span>
+          )}
+        </div>
+
+        <button
+          type="submit"
+          className="btn bg-[#f05122] text-white hover:bg-amber-600 text-lg"
+        >
+          Update Movie
+        </button>
+      </form>
+      <PageTitle />
+    </div>
+  );
+};
+
+export default UpdateMovies;

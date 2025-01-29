@@ -48,7 +48,7 @@ const Navbar = (props) => {
     </>
   );
   return (
-    <div className="navbar bg-gray-800 bg-opacity-10 lg:px-8 lg:py-6 px-4 py-4 w-full shadow-md text-white fixed top-0 left-0 z-50">
+    <div className="navbar bg-gray-800 bg-opacity-10 lg:px-8 lg:py-4 px-4 py-2 w-full shadow-md text-white fixed top-0 left-0 z-50">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

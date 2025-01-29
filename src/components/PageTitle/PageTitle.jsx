@@ -10,8 +10,9 @@ const PageTitle = () => {
     "/allmovies": "All Movies | HeroMovies",
     "/review": "Review | HeroMovies",
     "/pricing": "Plans | HeroMovies",
-    "/favorites": "Favorite Movies | HeroMovies",
-    "/details/:id": "MovieDetails | HeroMovies",
+    "/favorites": "Favorites | HeroMovies",
+    "/details/:id": "Details | HeroMovies",
+    "/update/:id": "Update | HeroMovies",
   };
 
   useEffect(() => {

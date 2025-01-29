@@ -8,8 +8,8 @@ const MovieCard = ({ movie }) => {
   const { _id, title, poster, genre, duration, releaseYear, rating } = movie;
 
   return (
-    <div className="relative group w-full rounded-lg shadow-xl overflow-hidden bg-gray-100 h-fit p-2">
-      <figure className="w-full h-full">
+    <div className="relative group  rounded-lg shadow-xl overflow-hidden bg-gray-100  p-2 w-72 h-80">
+      <figure className="w-72 h-84">
         <img className="h-full w-full object-cover" src={poster} alt={title} />
       </figure>
 

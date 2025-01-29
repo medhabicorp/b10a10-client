@@ -9,9 +9,9 @@ const Footer = (props) => {
         <NavLink className=" font-bold text-lg py-2 px-6 text-center lg:px-6">
           HERO MOVIES
         </NavLink>
-        <p className="text-lg mt-2 text-gray-200s ml-16">
-          Your Daily Entertainment Partner
-        </p>
+        <div className="text-center text-sm py-4">
+          @ {new Date().getFullYear()}. Hero Movies. All rights reserved.
+        </div>
       </div>
       <div className="flex flex-col md:flex-row gap-8 justify-between">
         <nav className=" flex flex-col">
@@ -30,7 +30,10 @@ const Footer = (props) => {
             >
               Reviews
             </NavLink>
-            <NavLink to="/" className="link link-hover hover:text-[#f05122]">
+            <NavLink
+              to="/allmovies"
+              className="link link-hover hover:text-[#f05122]"
+            >
               Featured Movies
             </NavLink>
             <NavLink
@@ -48,22 +51,16 @@ const Footer = (props) => {
             <NavLink to="/" className="link link-hover hover:text-[#f05122]">
               About us
             </NavLink>
-            <NavLink
-              to="/about"
-              className="link link-hover hover:text-[#f05122]"
-            >
+            <NavLink to="/" className="link link-hover hover:text-[#f05122]">
               Contact
             </NavLink>
             <NavLink
-              to="/reviews"
+              to="/review"
               className="link link-hover hover:text-[#f05122]"
             >
               Blog
             </NavLink>
-            <NavLink
-              to="/about"
-              className="link link-hover hover:text-[#f05122]"
-            >
+            <NavLink to="/" className="link link-hover hover:text-[#f05122]">
               Career
             </NavLink>
           </div>

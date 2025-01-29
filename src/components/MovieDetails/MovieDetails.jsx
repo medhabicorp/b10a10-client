@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import PageTitle from "../PageTitle/PageTitle";
 import { authContext } from "../AuthProvider/AuthProvider";
@@ -105,20 +105,16 @@ const MovieDetails = () => {
   };
 
   return (
-    <>
-      <div>
-        <h1 className="font-bold text-3xl lg:text-4xl w-[75%] mx-auto my-4 lg:my-8 text-center border-2 lg:border-4 py-4 rounded-xl border-gray-900">
-          Movie Name: <span className="text-orange-400">{title}</span>
-        </h1>
-      </div>
+    <div className="flex flex-col items-center mx-w-[90%] ">
+      <div></div>
 
-      <div className="flex flex-col md:flex-row bg-gray-900 text-white p-6 rounded-lg shadow-lg max-w-4xl mx-auto mb-6">
+      <div className="flex flex-col md:flex-row bg-gray-900 text-white p-6 rounded-lg shadow-lg mx-auto mb-6 lg:max-w-[75%] mt-2 items-center">
         {/* Left Side - Poster */}
         <div className="w-full md:w-1/3">
           <img
             src={poster}
             alt={title}
-            className="rounded-lg shadow-lg w-full h-auto"
+            className="rounded-lg shadow-lg w-full h-[90%]"
           />
         </div>
 
@@ -140,29 +136,40 @@ const MovieDetails = () => {
           </div>
 
           {/* Buttons */}
-          <div className="flex flex-col gap-4 mt-4">
+          <div className="flex flex-col gap-4 mt-4 ">
             <button className="bg-red-600 hover:bg-red-700 transition-all px-6 py-2 rounded-lg text-lg font-semibold cursor-pointer">
               Watch Now
             </button>
-            <div className="flex justify-between gap-4">
+            <div className="flex flex-wrap justify-between gap-4 mt-8 items-center">
               <button
                 onClick={handleAddToFavorites}
-                className="bg-yellow-500 hover:bg-yellow-700 px-6 py-2 rounded-lg text-lg font-semibold cursor-pointer"
+                className="border-yellow-500 border-2 hover:bg-yellow-700 px-6 py-2 rounded-lg text-lg font-semibold cursor-pointer"
               >
                 Add to Favorite
               </button>
+              <Link to={`/update/${_id}`}>
+                <button className="border-2 border-cyan-500 hover:bg-cyan-700 px-6 py-2 rounded-lg text-lg font-semibold cursor-pointer text-white">
+                  Update
+                </button>
+              </Link>
               <button
                 onClick={() => handleDeleteMovie(_id)}
-                className="bg-gray-700 hover:bg-red-600 px-6 py-2 rounded-lg text-lg font-semibold cursor-pointer"
+                className="border-2 border-red-600 hover:bg-red-600 px-6 py-2 rounded-lg text-lg font-semibold cursor-pointer"
               >
                 Delete Movie
               </button>
+              <Link to="/allmovies">
+                <button className=" border-2 border-green-600 hover:bg-green-800 px-6 py-2 rounded-lg text-lg font-semibold cursor-pointer">
+                  ALL MOVIES
+                </button>
+              </Link>
             </div>
           </div>
         </div>
       </div>
+
       <PageTitle />
-    </>
+    </div>
   );
 };
 
