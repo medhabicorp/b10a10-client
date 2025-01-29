@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import PageTitle from "../PageTitle/PageTitle";
+import { authContext } from "../AuthProvider/AuthProvider";
 
 const MovieDetails = () => {
   const movie = useLoaderData();
   const navigate = useNavigate();
+  const { user } = useContext(authContext);
 
   if (!movie) {
     return (
@@ -53,22 +55,53 @@ const MovieDetails = () => {
   };
 
   // Function to add movie to favorites
-  const handleAddToFavorites = async () => {
-    try {
-      const response = await fetch(`http://localhost:5000/favorites`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(movie),
-      });
+  const handleAddToFavorites = (event) => {
+    event.preventDefault();
 
-      if (response.ok) {
-        alert(`"${title}" added to favorites!`);
-      } else {
-        alert("Failed to add movie to favorites.");
-      }
-    } catch (error) {
-      console.error("Error adding movie to favorites:", error);
-    }
+    const favoriteMovie = { ...movie, userEmail: user.email };
+
+    // Send data to the server
+    fetch("http://localhost:5000/favorites", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(favoriteMovie),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.message === "The movie is already added to favorites.") {
+          Swal.fire({
+            title: "Info!",
+            text: "The movie is already added to your favorites.",
+            icon: "info",
+            confirmButtonText: "Okay",
+          });
+        } else if (data.success) {
+          Swal.fire({
+            title: "Success!",
+            text: `"${movie.title}" added to favorites!`,
+            icon: "success",
+            confirmButtonText: "Okay",
+          });
+        } else {
+          Swal.fire({
+            title: "Error!",
+            text: data.message || "Failed to add the movie to favorites.",
+            icon: "error",
+            confirmButtonText: "Okay",
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error adding movie to favorites:", error);
+        Swal.fire({
+          title: "Error!",
+          text: "Something went wrong. Please try again later.",
+          icon: "error",
+          confirmButtonText: "Okay",
+        });
+      });
   };
 
   return (

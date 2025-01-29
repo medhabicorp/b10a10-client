@@ -30,21 +30,25 @@ const Navbar = (props) => {
         </NavLink>
       </li>
 
-      <li>
-        <NavLink to="/addmovies" className="hover:underline">
-          Add Movies
-        </NavLink>
-      </li>
+      {user && (
+        <li>
+          <NavLink to="/addmovies" className="hover:underline">
+            Add Movies
+          </NavLink>
+        </li>
+      )}
 
-      <li>
-        <NavLink to="/favorites" className="hover:underline">
-          My Favorites
-        </NavLink>
-      </li>
+      {user && (
+        <li>
+          <NavLink to="/favorites" className="hover:underline">
+            My Favorites
+          </NavLink>
+        </li>
+      )}
     </>
   );
   return (
-    <div className="navbar bg-gray-800 bg-opacity-10 lg:px-8 lg:py-6 px-4 py-4 w-full shadow-md text-white">
+    <div className="navbar bg-gray-800 bg-opacity-10 lg:px-8 lg:py-6 px-4 py-4 w-full shadow-md text-white fixed top-0 left-0 z-50">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -82,26 +86,29 @@ const Navbar = (props) => {
       <div className="navbar-end">
         {user ? (
           // Logged-in state
-          <div className="flex justify-center items-center gap-4">
-            {/* User photo with hover tooltip for displayName */}
-            <div className="relative group">
-              <img
-                className="w-12 h-12 rounded-full border-2 border-[#f05122] cursor-pointer"
-                src={user?.photoURL || userImg}
-                alt="User Profile"
-              />
-              {/* Tooltip for displayName */}
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-black text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                {user.displayName}
+          <div className="relative group">
+            {/* User photo */}
+            <img
+              className="w-12 h-12 rounded-full border-2 border-[#f05122] cursor-pointer"
+              src={user?.photoURL || userImg}
+              alt="User Profile"
+            />
+            {/* Dropdown menu */}
+            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-400 z-50">
+              <div className="p-4">
+                {/* Display Name */}
+                <p className="text-gray-800 font-semibold">
+                  {user.displayName}
+                </p>
+                {/* Logout Button */}
+                <button
+                  className="w-full mt-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200 cursor-pointer"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
               </div>
             </div>
-            {/* Logout button */}
-            <button
-              className="btn bg-red-600 text-white hover:bg-orange-600 border-none"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
           </div>
         ) : (
           // Logged-out state

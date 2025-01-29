@@ -10,7 +10,7 @@ const MainLayout = (props) => {
       <div>
         <Navbar />
       </div>
-      <div>
+      <div className="pt-[108px]">
         <Outlet />
       </div>
       <Footer />
