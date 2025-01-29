@@ -60,7 +60,7 @@ const FavoriteMovies = () => {
   };
 
   return (
-    <div className="w-[90%] mx-auto p-4">
+    <div className="w-[90%] mx-auto p-4 min-h-screen">
       <h1 className="font-bold text-3xl lg:text-4xl text-center my-8">
         Favorite Movies
       </h1>

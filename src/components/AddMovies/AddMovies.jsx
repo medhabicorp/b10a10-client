@@ -109,7 +109,7 @@ const AddMovies = () => {
       </h1>
       <form
         onSubmit={handleAddMovie}
-        className="bg-white shadow-xl p-6 rounded-xl w-[90%] lg:w-1/2 mb-12 flex flex-col gap-3"
+        className="bg-white shadow-xl p-6 rounded-xl  w-[90%] lg:w-1/2 mb-12 flex flex-col gap-3"
       >
         {/* Movie Poster */}
         <div>

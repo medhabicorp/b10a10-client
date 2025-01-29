@@ -107,9 +107,8 @@ const MovieDetails = () => {
   return (
     <>
       <div>
-        <h1 className="font-bold text-3xl lg:text-4xl w-[75%] lg:w-[50%] mx-auto my-4 lg:my-8 text-center border-2 lg:border-4 py-4 rounded-xl border-gray-900">
-          Movie Name
-          <br /> <span className="text-orange-400">{title}</span>
+        <h1 className="font-bold text-3xl lg:text-4xl w-[75%] mx-auto my-4 lg:my-8 text-center border-2 lg:border-4 py-4 rounded-xl border-gray-900">
+          Movie Name: <span className="text-orange-400">{title}</span>
         </h1>
       </div>
 
