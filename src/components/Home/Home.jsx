@@ -47,7 +47,7 @@ const Home = (props) => {
           Featured Movies
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-[90%] mx-auto my-4 items-center justify-center">
-          {movies?.slice(0, 6).map((movie) => (
+          {movies?.map((movie) => (
             <MovieCard
               key={movie._id}
               movie={movie}

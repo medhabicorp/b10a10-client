@@ -112,13 +112,13 @@ const Navbar = (props) => {
           </div>
         ) : (
           // Logged-out state
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <Link to="/login">
               <button className="btn bg-[#f05324] text-white border-none hover:bg-[#e04a1f]">
                 Login
               </button>
             </Link>
-            <span className="text-gray-600">or</span>
+            <span className="text-white">/</span>
             <Link to="/register">
               <button className="btn bg-[#f05324] text-white border-none hover:bg-[#e04a1f]">
                 Register
