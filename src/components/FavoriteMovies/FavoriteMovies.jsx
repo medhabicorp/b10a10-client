@@ -60,8 +60,8 @@ const FavoriteMovies = () => {
   };
 
   return (
-    <div className="w-[90%] mx-auto p-4 min-h-screen">
-      <h1 className="font-bold text-3xl lg:text-4xl text-center my-8">
+    <div className="w-[90%] mx-auto  min-h-screen">
+      <h1 className="font-bold text-xl lg:text-2xl w-[75%] lg:w-[30%] mx-auto my-2 lg:my-4 text-center border-3 py-2 rounded-xl border-orange-500">
         Favorite Movies
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -36,7 +36,7 @@ const Review = () => {
   ];
 
   return (
-    <div className="bg-white mt-2">
+    <div className="">
       <div
         className="w-full h-[300px] bg-cover bg-center"
         style={{
@@ -44,7 +44,7 @@ const Review = () => {
         }}
       ></div>
 
-      <h1 className="text-center font-bold text-3xl lg:text-4xl my-8 border-2 border-amber-400 lg:w-1/3 w-full mx-auto px-4 py-2 rounded-lg">
+      <h1 className="font-bold text-xl lg:text-2xl w-[75%] lg:w-[30%] mx-auto my-2 lg:my-4 text-center border-3 py-2 rounded-xl border-orange-500">
         Our Latest Movie Reviews
       </h1>
 

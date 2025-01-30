@@ -101,7 +101,7 @@ const UpdateMovies = () => {
 
   return (
     <div className="flex flex-col items-center justify-center bg-base-200">
-      <h1 className="text-3xl font-bold my-6 text-center text-[#f05122]">
+      <h1 className="font-bold text-xl lg:text-2xl w-[75%] lg:w-[30%] mx-auto my-2 lg:my-4 text-center border-3 py-2 rounded-xl border-orange-500">
         Update Movie
       </h1>
       <form

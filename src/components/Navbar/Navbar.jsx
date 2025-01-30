@@ -48,7 +48,7 @@ const Navbar = (props) => {
     </>
   );
   return (
-    <div className="navbar bg-gray-800 bg-opacity-10 lg:px-8 lg:py-4 px-4 py-2 w-full shadow-md text-white fixed top-0 left-0 z-50">
+    <div className="navbar bg-gray-800 bg-opacity-10 lg:px-8 px-4 w-full shadow-md text-white fixed top-0 left-0 z-50">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -97,7 +97,7 @@ const Navbar = (props) => {
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-400 z-50">
               <div className="p-4">
                 {/* Display Name */}
-                <p className="text-gray-800 font-semibold">
+                <p className="text-gray-800 text-center font-bold">
                   {user.displayName}
                 </p>
                 {/* Logout Button */}
