@@ -19,6 +19,9 @@ const Home = (props) => {
     setIsDarkMode(!isDarkMode);
   };
 
+  // sort movies by rating
+  const sortedMovies = [...movies].sort((a, b) => b.rating - a.rating);
+
   return (
     <div
       className={`min-h-screen ${
@@ -47,7 +50,7 @@ const Home = (props) => {
           Featured Movies
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-[90%] mx-auto my-4 items-center justify-center">
-          {movies?.map((movie) => (
+          {sortedMovies?.map((movie) => (
             <MovieCard
               key={movie._id}
               movie={movie}
