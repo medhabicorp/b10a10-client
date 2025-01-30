@@ -20,7 +20,7 @@ const Registration = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError;
+    setError("");
     const name = e.target.name.value;
     const image = e.target.image.value;
     const email = e.target.email.value;
@@ -43,23 +43,34 @@ const Registration = () => {
       return;
     }
 
-    handleRegister(email, password).then((res) => {
-      toast.success("Your Account Successfully Registered !");
-      manageProfile(name, image);
-      navigate(location.state?.from || "/");
-    });
+    handleRegister(email, password)
+      .then(() => {
+        toast.success("Your Account Successfully Registered!");
+        manageProfile(name, image);
+        navigate(location.state?.from || "/");
+      })
+      .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          setError(
+            "This email is already registered. Please use a different email."
+          );
+        } else {
+          setError("An error occurred during registration. Please try again.");
+        }
+        console.error("Registration Error:", error);
+      });
   };
   return (
-    <div className="hero bg-base-200 min-h-screen ">
+    <div className="hero bg-gradient-to-r from-orange-400 to-red-600 min-h-screen  ">
       <PageTitle />
       <div className="hero-content flex-col w-[90%] lg:w-[50%]">
-        <div className="text-center lg:text-left">
-          <img className="w-40 mb-4" src={heroLogo} alt="" />
-          <h1 className="font-bold text-3xl lg:text-4xl text-center">
-            Register Now!
-          </h1>
-        </div>
         <div className="card bg-base-100 w-full max-w-md shrink-0 shadow-2xl">
+          <div className="text-center lg:text-left flex flex-col items-center">
+            <img className="w-36 my-2" src={heroLogo} alt="" />
+            <h1 className="font-bold text-2xl lg:text-3xl text-center">
+              Register Now!
+            </h1>
+          </div>
           <form onSubmit={handleSubmit} className="card-body">
             <div className="form-control">
               <label className="label">

@@ -1,5 +1,284 @@
+// import React, { useContext, useState } from "react";
+// import PropTypes from "prop-types";
+// import { Link, useLocation, useNavigate } from "react-router-dom";
+// import googleIcon from "../../assets/google-32.png";
+// import { authContext } from "../AuthProvider/AuthProvider";
+// import { toast, Toaster } from "react-hot-toast";
+// import PageTitle from "../PageTitle/PageTitle";
+// import heroLogo from "../../assets/Hero Movies logo.png";
+
+// const Login = () => {
+//   const { handleGoogleLogin, handleLogin } = useContext(authContext);
+
+//   const [error, setError] = useState("");
+//   const [email, setEmail] = useState("");
+
+//   const location = useLocation();
+
+//   const navigate = useNavigate();
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     const form = e.target;
+//     const email = form.email.value;
+//     const password = form.password.value;
+
+//     handleLogin(email, password)
+//       .then((res) => {
+//         toast.success("Successfully logged in!");
+//         form.reset();
+//         navigate(location.state?.from || "/");
+//       })
+//       .catch((err) => {
+//         const errorMessage =
+//           "Email and Password don't match. Please try again!";
+//         setError(errorMessage);
+//         toast.error(errorMessage);
+//         form.reset();
+//       });
+//   };
+
+//   const googleLogingHandler = () => {
+//     handleGoogleLogin()
+//       .then((res) => {
+//         console.log("Google login successful:", res);
+//         toast.success("Successfully logged in with Google!");
+//         navigate(location.state?.from || "/");
+//       })
+//       .catch(() => {
+//         console.error("Google login failed:", err);
+//         toast.error("Failed to log in with Google.");
+//       });
+//   };
+//   return (
+//     <div>
+//       <Toaster />
+//       <PageTitle />
+//       <div className="hero bg-base-200 min-h-screen ">
+//         <div className="hero-content flex-col w-[90%] lg:w-[50%]">
+//           <div className="text-center lg:text-left">
+//             <img className="w-40 mb-4" src={heroLogo} alt="" />
+//             <h1 className="text-4xl font-bold text-center">Login now!</h1>
+//           </div>
+//           <div className="card bg-base-100 w-full max-w-md shrink-0 shadow-2xl">
+//             <form
+//               onSubmit={handleSubmit}
+//               className="card-body"
+//               onChange={(e) => setEmail(e.target.value)}
+//             >
+//               <div className="form-control">
+//                 <label className="label">
+//                   <span className="label-text font-semibold text-md">
+//                     Email
+//                   </span>
+//                 </label>
+//                 <input
+//                   type="email"
+//                   placeholder="Place Your Email Address"
+//                   className="input input-bordered w-full"
+//                   name="email"
+//                   required
+//                 />
+//               </div>
+//               <div className="form-control">
+//                 <label className="label">
+//                   <span className="label-text font-semibold text-md">
+//                     Password
+//                   </span>
+//                 </label>
+//                 <input
+//                   type="password"
+//                   placeholder="Type Your Password"
+//                   className="input input-bordered w-full"
+//                   name="password"
+//                   required
+//                 />
+//               </div>
+//               <div className="form-control mt-6">
+//                 <button className="btn btn-primary bg-[#f05122] hover:bg-[#f26338] border-none text-xl text-white w-full">
+//                   Login
+//                 </button>
+//               </div>
+//             </form>
+
+//             {error && <p className="text-red-500 ml-8">{error}</p>}
+
+//             <div className="flex flex-col items-center justify-left gap-2 mb-2">
+//               {" "}
+//               <h1 className="font-bold text-gray-500 px-8">Or Login With</h1>
+//               <button
+//                 onClick={googleLogingHandler}
+//                 className=" cursor-pointer"
+//                 href=""
+//               >
+//                 <img src={googleIcon} alt="" />
+//               </button>
+//             </div>
+
+//             <h1 className="text-md px-8 mb-4 font-semibold text-gray-500">
+//               Don't have any account?{" "}
+//               <Link to="/register">
+//                 <button className="font-bold text-xl text-[#f05122] cursor-pointer">
+//                   Register
+//                 </button>
+//               </Link>
+//             </h1>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// Login.propTypes = {};
+
+// export default Login;
+
+// // react-hook-form same design
+// import React, { useContext, useState } from "react";
+// import { useForm } from "react-hook-form";
+// import { Link, useLocation, useNavigate } from "react-router-dom";
+// import googleIcon from "../../assets/google-32.png";
+// import { authContext } from "../AuthProvider/AuthProvider";
+// import { toast, Toaster } from "react-hot-toast";
+// import PageTitle from "../PageTitle/PageTitle";
+// import heroLogo from "../../assets/Hero Movies logo.png";
+
+// const Login = () => {
+//   const { handleGoogleLogin, handleLogin } = useContext(authContext);
+//   const [error, setError] = useState("");
+
+//   const {
+//     register,
+//     handleSubmit,
+//     reset,
+//     formState: { errors },
+//   } = useForm();
+
+//   const location = useLocation();
+//   const navigate = useNavigate();
+
+//   const onSubmit = (data) => {
+//     const { email, password } = data;
+
+//     handleLogin(email, password)
+//       .then(() => {
+//         toast.success("Successfully logged in!");
+//         reset();
+//         navigate(location.state?.from || "/");
+//       })
+//       .catch(() => {
+//         const errorMessage =
+//           "Email and Password don't match. Please try again!";
+//         setError(errorMessage);
+//         toast.error(errorMessage);
+//         reset();
+//       });
+//   };
+
+//   const googleLoginHandler = () => {
+//     handleGoogleLogin()
+//       .then(() => {
+//         toast.success("Successfully logged in with Google!");
+//         navigate(location.state?.from || "/");
+//       })
+//       .catch((err) => {
+//         console.error("Google login failed:", err);
+//         toast.error("Failed to log in with Google.");
+//       });
+//   };
+
+//   return (
+//     <div>
+//       <Toaster />
+//       <PageTitle />
+//       <div className="hero bg-base-200 min-h-screen">
+//         <div className="hero-content flex-col w-[90%] lg:w-[50%]">
+//           <div className="text-center lg:text-left">
+//             <img className="w-40 mb-4" src={heroLogo} alt="Hero Logo" />
+//             <h1 className="text-4xl font-bold text-center">Login now!</h1>
+//           </div>
+//           <div className="card bg-base-100 w-full max-w-md shrink-0 shadow-2xl">
+//             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+//               <div className="form-control">
+//                 <label className="label">
+//                   <span className="label-text font-semibold text-md">
+//                     Email
+//                   </span>
+//                 </label>
+//                 <input
+//                   type="email"
+//                   placeholder="Place Your Email Address"
+//                   className="input input-bordered w-full"
+//                   {...register("email", {
+//                     required: "Email is required",
+//                     pattern: {
+//                       value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+//                       message: "Invalid email format",
+//                     },
+//                   })}
+//                 />
+//                 {errors.email && (
+//                   <p className="text-red-500 mt-2">{errors.email.message}</p>
+//                 )}
+//               </div>
+//               <div className="form-control">
+//                 <label className="label">
+//                   <span className="label-text font-semibold text-md">
+//                     Password
+//                   </span>
+//                 </label>
+//                 <input
+//                   type="password"
+//                   placeholder="Type Your Password"
+//                   className="input input-bordered w-full"
+//                   {...register("password", {
+//                     required: "Password is required",
+//                     minLength: {
+//                       value: 6,
+//                       message: "Password must be at least 6 characters long",
+//                     },
+//                   })}
+//                 />
+//                 {errors.password && (
+//                   <p className="text-red-500 mt-2">{errors.password.message}</p>
+//                 )}
+//               </div>
+//               <div className="form-control mt-6">
+//                 <button className="btn btn-primary bg-[#f05122] hover:bg-[#f26338] border-none text-xl text-white w-full">
+//                   Login
+//                 </button>
+//               </div>
+//             </form>
+
+//             {error && <p className="text-red-500 ml-8 mt-2">{error}</p>}
+
+//             <div className="flex flex-col items-center justify-left gap-2 mb-2">
+//               <h1 className="font-bold text-gray-500 px-8">Or Login With</h1>
+//               <button onClick={googleLoginHandler} className="cursor-pointer">
+//                 <img src={googleIcon} alt="Google Login Icon" />
+//               </button>
+//             </div>
+
+//             <h1 className="text-md px-8 mb-4 font-semibold text-gray-500">
+//               Don't have any account?{" "}
+//               <Link to="/register">
+//                 <button className="font-bold text-xl text-[#f05122] cursor-pointer">
+//                   Register
+//                 </button>
+//               </Link>
+//             </h1>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Login;
+
 import React, { useContext, useState } from "react";
-import PropTypes from "prop-types";
+import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import googleIcon from "../../assets/google-32.png";
 import { authContext } from "../AuthProvider/AuthProvider";
@@ -9,127 +288,144 @@ import heroLogo from "../../assets/Hero Movies logo.png";
 
 const Login = () => {
   const { handleGoogleLogin, handleLogin } = useContext(authContext);
-
   const [error, setError] = useState("");
-  const [email, setEmail] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const location = useLocation();
-
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
+  const onSubmit = (data) => {
+    const { email, password } = data;
 
     handleLogin(email, password)
-      .then((res) => {
+      .then(() => {
         toast.success("Successfully logged in!");
-        form.reset();
+        reset();
         navigate(location.state?.from || "/");
       })
-      .catch((err) => {
+      .catch(() => {
         const errorMessage =
           "Email and Password don't match. Please try again!";
         setError(errorMessage);
         toast.error(errorMessage);
-        form.reset();
+        reset();
       });
   };
 
-  const googleLogingHandler = () => {
+  const googleLoginHandler = () => {
     handleGoogleLogin()
-      .then((res) => {
-        console.log("Google login successful:", res);
+      .then(() => {
         toast.success("Successfully logged in with Google!");
         navigate(location.state?.from || "/");
       })
-      .catch(() => {
+      .catch((err) => {
         console.error("Google login failed:", err);
         toast.error("Failed to log in with Google.");
       });
   };
+
   return (
     <div>
       <Toaster />
       <PageTitle />
-      <div className="hero bg-base-200 min-h-screen ">
-        <div className="hero-content flex-col w-[90%] lg:w-[50%]">
-          <div className="text-center lg:text-left">
-            <img className="w-40 mb-4" src={heroLogo} alt="" />
-            <h1 className="text-4xl font-bold text-center">Login now!</h1>
+      <div className="hero min-h-screen bg-gradient-to-r from-[#FF0054] to-[#00DBFF] flex items-center justify-center">
+        <div className="card w-full max-w-md bg-white shadow-lg rounded-lg p-4 lg:p-8 ">
+          <div className="text-center mb-6">
+            <img className="w-24 mx-auto mb-4" src={heroLogo} alt="Hero Logo" />
+            <h1 className="text-3xl font-bold text-gray-800">Welcome!</h1>
+            <p className="text-gray-600">Please login to your account</p>
           </div>
-          <div className="card bg-base-100 w-full max-w-md shrink-0 shadow-2xl">
-            <form
-              onSubmit={handleSubmit}
-              className="card-body"
-              onChange={(e) => setEmail(e.target.value)}
-            >
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-md">
-                    Email
-                  </span>
-                </label>
-                <input
-                  type="email"
-                  placeholder="Place Your Email Address"
-                  className="input input-bordered w-full"
-                  name="email"
-                  required
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-md">
-                    Password
-                  </span>
-                </label>
-                <input
-                  type="password"
-                  placeholder="Type Your Password"
-                  className="input input-bordered w-full"
-                  name="password"
-                  required
-                />
-              </div>
-              <div className="form-control mt-6">
-                <button className="btn btn-primary bg-[#f05122] hover:bg-[#f26338] border-none text-xl text-white w-full">
-                  Login
-                </button>
-              </div>
-            </form>
-
-            {error && <p className="text-red-500 ml-8">{error}</p>}
-
-            <div className="flex flex-col items-center justify-left gap-2 mb-2">
-              {" "}
-              <h1 className="font-bold text-gray-500 px-8">Or Login With</h1>
-              <button
-                onClick={googleLogingHandler}
-                className=" cursor-pointer"
-                href=""
-              >
-                <img src={googleIcon} alt="" />
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-semibold text-gray-700">
+                  Email
+                </span>
+              </label>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="input input-bordered w-full px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                    message: "Invalid email format",
+                  },
+                })}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-semibold text-gray-700">
+                  Password
+                </span>
+              </label>
+              <input
+                type="password"
+                placeholder="Enter your password"
+                className="input input-bordered w-full px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters long",
+                  },
+                })}
+              />
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+            <div className="form-control mt-6">
+              <button className="btn btn-primary w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md">
+                Login
               </button>
             </div>
+          </form>
 
-            <h1 className="text-md px-8 mb-4 font-semibold text-gray-500">
-              Don't have any account?{" "}
-              <Link to="/register">
-                <button className="font-bold text-xl text-[#f05122] cursor-pointer">
-                  Register
-                </button>
-              </Link>
-            </h1>
+          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+
+          <div className="flex flex-col items-center mt-6">
+            <h1 className="font-bold text-gray-500 mb-2">Or Login With</h1>
+            <button
+              onClick={googleLoginHandler}
+              className="flex items-center space-x-2 border border-gray-300 px-4 py-2 rounded-md hover:bg-gray-100  cursor-pointer"
+            >
+              <img
+                src={googleIcon}
+                alt="Google Login Icon"
+                className="w-5 h-5"
+              />
+              <span className="text-gray-700">Google</span>
+            </button>
           </div>
+
+          <p className="text-center text-gray-600 mt-6">
+            Don't have an account?{" "}
+            <Link to="/register">
+              <span className="text-indigo-600 font-semibold cursor-pointer">
+                Register
+              </span>
+            </Link>
+          </p>
         </div>
       </div>
     </div>
   );
 };
-
-Login.propTypes = {};
 
 export default Login;

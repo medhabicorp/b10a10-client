@@ -8,9 +8,9 @@ const MovieCard = ({ movie }) => {
   const { _id, title, poster, genre, duration, releaseYear, rating } = movie;
 
   return (
-    <div className="relative group  rounded-lg shadow-xl overflow-hidden bg-gray-100  p-2 w-72 h-80">
-      <figure className="w-72 h-84">
-        <img className="h-full w-full object-cover" src={poster} alt={title} />
+    <div className="relative group  rounded-lg shadow-xl overflow-hidden bg-gray-100  p-2 w-full h-full">
+      <figure className="w-full h-84 lg:h-96">
+        <img className="w-full h-full object-cover" src={poster} alt={title} />
       </figure>
 
       <div className="card-body absolute bottom-0 text-gray-200 w-full bg-emerald-100 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
