@@ -10,7 +10,7 @@ const FavoriteMovies = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/favorites/${user.email}`)
+      fetch(`https://b10a10-movie-server.vercel.app/favorites/${user.email}`)
         .then((res) => res.json())
         .then((data) => {
           setFavorites(data);
@@ -31,9 +31,12 @@ const FavoriteMovies = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/favorites/${id}?email=${user.email}`, {
-          method: "DELETE",
-        })
+        fetch(
+          `https://b10a10-movie-server.vercel.app/favorites/${id}?email=${user.email}`,
+          {
+            method: "DELETE",
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             if (data.success) {
@@ -66,7 +69,7 @@ const FavoriteMovies = () => {
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {favorites.length > 0 ? (
-          favorites.map((fav) => (
+          favorites?.map((fav) => (
             <div
               key={fav._id}
               className="bg-gray-900 text-white p-6 rounded-lg shadow-lg"

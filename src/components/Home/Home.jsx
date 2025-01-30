@@ -8,7 +8,7 @@ import Review from "../Review/Review";
 import PageTitle from "../PageTitle/PageTitle";
 
 const Home = (props) => {
-  const loadMovies = useLoaderData();
+  const loadMovies = useLoaderData() || [];
   const [movies, setMovies] = useState(loadMovies);
 
   // Theme state
@@ -47,17 +47,14 @@ const Home = (props) => {
           Featured Movies
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-[90%] mx-auto my-4 items-center justify-center">
-          {movies
-            ?.sort((a, b) => b.rating - a.rating)
-            .slice(0, 6)
-            .map((movie) => (
-              <MovieCard
-                key={movie._id}
-                movie={movie}
-                movies={movies}
-                setMovies={setMovies}
-              />
-            ))}
+          {movies?.slice(0, 6).map((movie) => (
+            <MovieCard
+              key={movie._id}
+              movie={movie}
+              movies={movies}
+              setMovies={setMovies}
+            />
+          ))}
         </div>
         <Link to="/allmovies">
           <button className="bg-red-600 hover:bg-red-700 transition-all px-6 py-2 rounded-lg text-lg font-semibold cursor-pointer text-white my-8">

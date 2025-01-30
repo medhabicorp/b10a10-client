@@ -31,13 +31,13 @@ const MovieDetails = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log("Delete confirmed for movie ID:", _id);
-        fetch(`http://localhost:5000/movies/${_id}`, {
+        // console.log("Delete confirmed for movie ID:", _id);
+        fetch(`https://b10a10-movie-server.vercel.app/movies/${_id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log("Server response:", data);
+            // console.log("Server response:", data);
             if (data.deletedCount > 0) {
               Swal.fire({
                 title: "Deleted!",
@@ -61,7 +61,7 @@ const MovieDetails = () => {
     const favoriteMovie = { ...movie, userEmail: user.email };
 
     // Send data to the server
-    fetch("http://localhost:5000/favorites", {
+    fetch("https://b10a10-movie-server.vercel.app/favorites", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -73,7 +73,7 @@ const UpdateMovies = () => {
     };
 
     // Send updated data to server
-    fetch(`http://localhost:5000/movies/${_id}`, {
+    fetch(`https://b10a10-movie-server.vercel.app/movies/${_id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -189,7 +189,7 @@ const UpdateMovies = () => {
             className="select w-full"
           >
             <option value="">Select Year</option>
-            {[...Array(76)].map((_, i) => (
+            {[...Array(76)]?.map((_, i) => (
               <option key={1950 + i} value={1950 + i}>
                 {1950 + i}
               </option>

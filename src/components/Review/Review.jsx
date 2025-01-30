@@ -49,7 +49,7 @@ const Review = () => {
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-[90%] mx-auto">
-        {movies.map((movie, index) => (
+        {movies?.map((movie, index) => (
           <div key={index} className="text-center">
             <img
               src={movie.img}

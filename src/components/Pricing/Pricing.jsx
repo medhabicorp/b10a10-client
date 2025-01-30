@@ -63,7 +63,7 @@ const Pricing = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-[90%] mx-auto mt-12">
-        {plans.map((plan, index) => (
+        {plans?.map((plan, index) => (
           <div
             key={index}
             className={`p-6 rounded-lg border-2 ${

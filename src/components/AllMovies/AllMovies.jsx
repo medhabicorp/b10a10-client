@@ -34,7 +34,7 @@ const AllMovies = () => {
       {/* Display filtered movies */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-[90%] mx-auto my-4 items-center justify-center">
         {filteredMovies.length > 0 ? (
-          filteredMovies.map((movie) => (
+          filteredMovies?.map((movie) => (
             <MovieCard key={movie._id} movie={movie} />
           ))
         ) : (
