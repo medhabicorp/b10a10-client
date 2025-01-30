@@ -10,7 +10,11 @@ const MovieCard = ({ movie }) => {
   return (
     <div className="relative group  rounded-lg shadow-xl overflow-hidden bg-gray-100  p-2 w-full h-full">
       <figure className="w-full h-84 lg:h-96">
-        <img className="w-full h-full object-cover" src={poster} alt={title} />
+        <img
+          className="w-full h-full object-cover p-4"
+          src={poster}
+          alt={title}
+        />
       </figure>
 
       <div className="card-body absolute bottom-0 text-gray-200 w-full bg-emerald-100 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
