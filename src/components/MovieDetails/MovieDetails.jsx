@@ -140,7 +140,7 @@ const MovieDetails = () => {
             <button className="bg-red-600 hover:bg-red-700 transition-all px-6 py-2 rounded-lg text-lg font-semibold cursor-pointer">
               Watch Now
             </button>
-            <div className="flex flex-wrap justify-between gap-4 mt-8 items-center">
+            <div className="flex flex-col md:flex-row justify-between gap-4 mt-8 items-center">
               <button
                 onClick={handleAddToFavorites}
                 className="border-yellow-500 border-2 hover:bg-yellow-700 px-6 py-2 rounded-lg text-lg font-semibold cursor-pointer"
