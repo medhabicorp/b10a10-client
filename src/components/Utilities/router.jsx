@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
         loader: () =>
-          fetch("https://hero-movie-server-2.vercel.app//movies?limit=6"),
+          fetch("https://b10a10-movie-server.vercel.app/movies?limit=6"),
       },
 
       {
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
       {
         path: "/allmovies",
         element: <AllMovies />,
-        loader: () => fetch("https://hero-movie-server-2.vercel.app//movies"),
+        loader: () => fetch("https://b10a10-movie-server.vercel.app/movies"),
       },
       {
         path: "/review",
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`https://hero-movie-server-2.vercel.app//movies/${params.id}`),
+          fetch(`https://b10a10-movie-server.vercel.app/movies/${params.id}`),
       },
       {
         path: "/update/:id",
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`https://hero-movie-server-2.vercel.app//movies/${params.id}`),
+          fetch(`https://b10a10-movie-server.vercel.app/movies/${params.id}`),
       },
       {
         path: "/favorites",

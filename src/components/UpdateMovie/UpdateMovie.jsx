@@ -73,7 +73,7 @@ const UpdateMovies = () => {
     };
 
     // Send updated data to server
-    fetch(`https://hero-movie-server-2.vercel.app//movies/${_id}`, {
+    fetch(` https://b10a10-movie-server.vercel.app/movies/${_id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

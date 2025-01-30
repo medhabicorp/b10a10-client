@@ -9,7 +9,7 @@ const FavoriteMovies = () => {
   // Fetch user's favorite movies from the database
   useEffect(() => {
     if (user?.email) {
-      fetch(`https://hero-movie-server-2.vercel.app//favorites/${user.email}`)
+      fetch(` https://b10a10-movie-server.vercel.app/favorites/${user.email}`)
         .then((res) => res.json())
         .then((data) => {
           setFavorites(Array.isArray(data) ? data : []);
@@ -31,7 +31,7 @@ const FavoriteMovies = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         fetch(
-          `https://hero-movie-server-2.vercel.app//favorites/${id}?email=${user.email}`,
+          ` https://b10a10-movie-server.vercel.app/favorites/${id}?email=${user.email}`,
           {
             method: "DELETE",
           }

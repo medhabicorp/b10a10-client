@@ -74,7 +74,7 @@ const AddMovies = () => {
     };
 
     // Send data to the server
-    fetch("https://hero-movie-server-2.vercel.app//movies", {
+    fetch(" https://b10a10-movie-server.vercel.app/movies", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
