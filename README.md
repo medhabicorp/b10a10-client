@@ -11,9 +11,10 @@ The primary goal of this application is to create a platform for movie enthusias
 **Assignment Category:** Orchid (MOVIE PORTAL)
 
 **GitHub Client Link:**[https://github.com/medhabicorp/b10a10-client](https://github.com/medhabicorp/b10a10-client)
+
 **GitHub Server Link:** [https://github.com/medhabicorp/b10a10-server](https://github.com/medhabicorp/b10a10-server)
 
-**Live Link:** [https://your-live-link.com](https://your-live-link.com)
+**Live Link:** [https://b10a10-hero-movie.web.app/](https://b10a10-hero-movie.web.app/)
 
 ## Key Features
 

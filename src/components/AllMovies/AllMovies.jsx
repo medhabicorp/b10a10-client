@@ -4,13 +4,15 @@ import MovieCard from "../MovieCard/MovieCard";
 import PageTitle from "../PageTitle/PageTitle";
 
 const AllMovies = () => {
-  const loadMovies = useLoaderData();
+  const loadMovies = useLoaderData() || [];
   const [search, setSearch] = useState("");
 
   // Filter movies based on the search term
-  const filteredMovies = loadMovies.filter((movie) =>
-    movie.title.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredMovies = Array.isArray(loadMovies)
+    ? loadMovies.filter((movie) =>
+        movie.title.toLowerCase().includes(search.toLowerCase())
+      )
+    : [];
 
   return (
     <div>
@@ -33,8 +35,8 @@ const AllMovies = () => {
 
       {/* Display filtered movies */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-[90%] mx-auto my-4 items-center justify-center">
-        {filteredMovies.length > 0 ? (
-          filteredMovies?.map((movie) => (
+        {Array.isArray(filteredMovies) && filteredMovies.length > 0 ? (
+          filteredMovies.map((movie) => (
             <MovieCard key={movie._id} movie={movie} />
           ))
         ) : (

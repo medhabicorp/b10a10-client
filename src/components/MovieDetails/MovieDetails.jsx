@@ -32,7 +32,7 @@ const MovieDetails = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         // console.log("Delete confirmed for movie ID:", _id);
-        fetch(`https://b10a10-movie-server.vercel.app/movies/${_id}`, {
+        fetch(`https://hero-movie-server-2.vercel.app//movies/${_id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -61,7 +61,7 @@ const MovieDetails = () => {
     const favoriteMovie = { ...movie, userEmail: user.email };
 
     // Send data to the server
-    fetch("https://b10a10-movie-server.vercel.app/favorites", {
+    fetch("https://hero-movie-server-2.vercel.app//favorites", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -3,17 +3,16 @@ import { authContext } from "../AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
 
 const FavoriteMovies = () => {
-  const { user } = useContext(authContext); // Get the logged-in user's information
+  const { user } = useContext(authContext);
   const [favorites, setFavorites] = useState([]);
 
   // Fetch user's favorite movies from the database
-
   useEffect(() => {
     if (user?.email) {
-      fetch(`https://b10a10-movie-server.vercel.app/favorites/${user.email}`)
+      fetch(`https://hero-movie-server-2.vercel.app//favorites/${user.email}`)
         .then((res) => res.json())
         .then((data) => {
-          setFavorites(data);
+          setFavorites(Array.isArray(data) ? data : []);
         })
         .catch((error) => console.error("Error fetching favorites:", error));
     }
@@ -32,7 +31,7 @@ const FavoriteMovies = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         fetch(
-          `https://b10a10-movie-server.vercel.app/favorites/${id}?email=${user.email}`,
+          `https://hero-movie-server-2.vercel.app//favorites/${id}?email=${user.email}`,
           {
             method: "DELETE",
           }
@@ -45,7 +44,7 @@ const FavoriteMovies = () => {
                 "The favorite movie has been removed.",
                 "success"
               );
-              setFavorites((prev) => prev.filter((fav) => fav._id !== id)); // Update UI
+              setFavorites((prev) => prev.filter((fav) => fav._id !== id));
             } else {
               Swal.fire(
                 "Error!",
