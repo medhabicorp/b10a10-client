@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { authContext } from "../AuthProvider/AuthProvider"; // Assuming authContext provides user info
+import { authContext } from "../AuthProvider/AuthProvider";
 import { Rating } from "react-simple-star-rating";
 import Swal from "sweetalert2";
 import PageTitle from "../PageTitle/PageTitle";
@@ -8,16 +8,11 @@ const AddMovies = () => {
   const { user } = useContext(authContext);
 
   const [errors, setErrors] = useState({});
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(1); // Default to 1 instead of 0
 
   const handleRating = (rate) => {
     setRating(rate);
   };
-  // Optional callback functions
-  const onPointerEnter = () => console.log("Pointer Entered");
-  const onPointerLeave = () => console.log("Pointer Left");
-  const onPointerMove = (value, index) =>
-    console.log("Value:", value, "Index:", index);
 
   const handleAddMovie = (event) => {
     event.preventDefault();
@@ -48,8 +43,8 @@ const AddMovies = () => {
     if (!releaseYear) {
       newErrors.releaseYear = "Please select a release year.";
     }
-    if (!rating || rating <= 0) {
-      newErrors.rating = "Please provide a valid rating.";
+    if (typeof rating !== "number" || rating < 1 || rating > 5) {
+      newErrors.rating = "Please provide a valid rating between 1 and 5.";
     }
     if (!summary || summary.length < 10) {
       newErrors.summary = "Summary must be at least 10 characters long.";
@@ -74,7 +69,7 @@ const AddMovies = () => {
     };
 
     // Send data to the server
-    fetch(" https://b10a10-movie-server.vercel.app/movies", {
+    fetch("https://b10a10-movie-server.vercel.app/movies", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -87,9 +82,9 @@ const AddMovies = () => {
           Swal.fire("Success", "Movie added successfully!", "success");
           form.reset();
           setErrors({});
-          setRating(0);
+          setRating(1); // Reset to default value
         } else {
-          Swal.fire("Error", "Failed to add movie.", "error");
+          Swal.fire("Error", result.message || "Failed to add movie.", "error");
         }
       })
       .catch((err) => {
@@ -109,7 +104,7 @@ const AddMovies = () => {
       </h1>
       <form
         onSubmit={handleAddMovie}
-        className="bg-white shadow-xl p-6 rounded-xl  w-[90%] lg:w-1/2 mb-12 flex flex-col gap-3"
+        className="bg-white shadow-xl p-6 rounded-xl w-[90%] lg:w-1/2 mb-12 flex flex-col gap-3"
       >
         {/* Movie Poster */}
         <div>
@@ -202,11 +197,11 @@ const AddMovies = () => {
               size={35}
               fillColor="gold"
               emptyColor="gray"
-              allowFraction={true}
+              allowFraction={false}
             />
             {/* Display Rating Value */}
             <span className="text-lg text-white bg-gray-500 px-4 py-2 rounded-xl">
-              {rating.toFixed(1)} / 5
+              {typeof rating === "number" ? rating : "N/A"} / 5
             </span>
           </div>
           {errors.rating && (

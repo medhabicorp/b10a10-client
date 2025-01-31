@@ -15,7 +15,7 @@ const UpdateMovies = () => {
   const navigate = useNavigate();
 
   const handleRating = (rate) => {
-    setUpdatedRating(rate / 20); // Assuming the Rating library provides 0-100, normalize to 0-5.
+    setUpdatedRating(rate); // Assuming the Rating library uses a range of 0–5
   };
 
   const handleUpdateMovie = (event) => {
@@ -47,11 +47,15 @@ const UpdateMovies = () => {
     if (!updatedDuration || updatedDuration < 60) {
       newErrors.duration = "Duration must be greater than 60 minutes.";
     }
-    if (!updatedReleaseYear) {
+    if (
+      !updatedReleaseYear ||
+      updatedReleaseYear < 1950 ||
+      updatedReleaseYear > new Date().getFullYear()
+    ) {
       newErrors.releaseYear = "Please select a valid release year.";
     }
-    if (!updatedRating || updatedRating <= 0) {
-      newErrors.rating = "Please provide a valid rating.";
+    if (!updatedRating || updatedRating <= 0 || updatedRating > 5) {
+      newErrors.rating = "Please provide a valid rating between 1 and 5.";
     }
     if (!updatedSummary || updatedSummary.length < 10) {
       newErrors.summary = "Summary must be at least 10 characters long.";
@@ -73,7 +77,7 @@ const UpdateMovies = () => {
       summary: updatedSummary,
     };
 
-    // Send updated data to server
+    // Send updated data to the server
     fetch(`https://b10a10-movie-server.vercel.app/movies/${_id}`, {
       method: "PUT",
       headers: {
@@ -109,6 +113,7 @@ const UpdateMovies = () => {
         onSubmit={handleUpdateMovie}
         className="bg-white shadow-xl p-6 rounded-xl w-[90%] lg:w-1/2 mb-12 flex flex-col gap-3"
       >
+        {/* Movie Poster */}
         <div>
           <label htmlFor="poster" className="font-bold text-xl">
             Movie Poster (URL):
@@ -125,7 +130,132 @@ const UpdateMovies = () => {
           )}
         </div>
 
-        {/* Other fields remain the same */}
+        {/* Movie Title */}
+        <div>
+          <label htmlFor="title" className="font-bold text-xl">
+            Movie Title:
+          </label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            defaultValue={title}
+            className="input w-full"
+          />
+          {errors.title && (
+            <span className="error text-red-500">{errors.title}</span>
+          )}
+        </div>
+
+        {/* Genre */}
+        <div>
+          <label htmlFor="genre" className="font-bold text-xl">
+            Genre:
+          </label>
+          <select
+            id="genre"
+            name="genre"
+            defaultValue={genre}
+            className="select w-full"
+          >
+            <option value="">Select Genre</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Drama">Drama</option>
+            <option value="Horror">Horror</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Action">Action</option>
+          </select>
+          {errors.genre && (
+            <span className="error text-red-500">{errors.genre}</span>
+          )}
+        </div>
+
+        {/* Duration */}
+        <div>
+          <label htmlFor="duration" className="font-bold text-xl">
+            Duration (minutes):
+          </label>
+          <input
+            type="number"
+            id="duration"
+            name="duration"
+            defaultValue={duration}
+            className="input w-full"
+          />
+          {errors.duration && (
+            <span className="error text-red-500">{errors.duration}</span>
+          )}
+        </div>
+
+        {/* Release Year */}
+        <div>
+          <label htmlFor="releaseYear" className="font-bold text-xl">
+            Release Year:
+          </label>
+          <select
+            id="releaseYear"
+            name="releaseYear"
+            defaultValue={releaseYear}
+            className="select w-full"
+          >
+            <option value="">Select Year</option>
+            {[...Array(76)].map((_, i) => (
+              <option key={1950 + i} value={1950 + i}>
+                {1950 + i}
+              </option>
+            ))}
+          </select>
+          {errors.releaseYear && (
+            <span className="error text-red-500">{errors.releaseYear}</span>
+          )}
+        </div>
+
+        {/* Rating */}
+        <div>
+          <label htmlFor="rating" className="font-bold text-xl">
+            Rating:
+          </label>
+          <div className="flex gap-2 items-center">
+            <Rating
+              onClick={handleRating}
+              initialValue={updatedRating}
+              size={35}
+              fillColor="gold"
+              emptyColor="gray"
+              allowFraction={false}
+            />
+            <span className="text-lg text-white bg-gray-500 px-4 py-2 rounded-xl">
+              {typeof updatedRating === "number" ? updatedRating : "N/A"} / 5
+            </span>
+          </div>
+          {errors.rating && (
+            <span className="error text-red-500">{errors.rating}</span>
+          )}
+        </div>
+
+        {/* Summary */}
+        <div>
+          <label htmlFor="summary" className="font-bold text-xl">
+            Summary:
+          </label>
+          <textarea
+            id="summary"
+            name="summary"
+            defaultValue={summary}
+            className="textarea w-full"
+          ></textarea>
+          {errors.summary && (
+            <span className="error text-red-500">{errors.summary}</span>
+          )}
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="btn bg-[#f05122] text-white hover:bg-amber-600 text-lg"
+        >
+          Update Movie
+        </button>
       </form>
       <PageTitle />
     </div>
