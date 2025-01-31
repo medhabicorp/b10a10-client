@@ -22,8 +22,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        loader: () =>
-          fetch("https://b10a10-movie-server.vercel.app/movies?limit=6"),
+        loader: () => fetch("https://b10a10-movie-server.vercel.app/movies"),
       },
 
       {
